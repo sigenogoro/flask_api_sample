@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='index.css')}}">
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>{{month_current}}月</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                {% for week in week_name %}
+                    <th>{{week}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for index in month_day %}
+            <tr>
+                {% for w in index %}
+                    <td>{{w.day}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    
+  </body>
+</html>
+  

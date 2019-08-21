@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='index.css')}}">
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <form method="POST" action="/post">
+        <div class="form-group">
+          <label>title</label>
+          <input type="text" name="title" class="form-control">
+          <small id="emailHelp" class="form-text text-muted">内容を記入してね！</small>
+        </div>
+        <div class="form-group">
+          <label>context</label>
+          <input type="text" name="context" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+</html>
+  

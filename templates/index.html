@@ -21,7 +21,10 @@
                 {% for w in index %}
                     <td>
                         <a href="./{{w.day}}">{{w.day}}</a>
-                        <div class="box">{{context}}</div>
+                        {% if params['day'] == w.day %}
+                            <div class="box">{{params['context']}}</div>
+                        {% endif %}
+                        
                     </td>
                 {% endfor %}
             </tr>

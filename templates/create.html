@@ -17,7 +17,7 @@
           <input type="text" name="context" class="form-control">
         </div>
         <div class="form-group">
-            {% if des_id < 9 %}
+            {% if des_id <= 9 %}
               <input type="date" name="day" class="form-control" value="2018-08-0{{des_id}}">
             {% else %}
               <input type="date" name="day" class="form-control" value="2018-08-{{des_id}}">

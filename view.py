@@ -4,6 +4,8 @@ from calendar import Calendar
 import os
 import datetime
 import requests
+import json
+
 app = Flask(__name__)
 
 @app.context_processor
@@ -22,17 +24,19 @@ def dated_url_for(endpoint, **values):
 
 @app.route("/")
 def index():
+    url_info = "http://localhost:3000/api/index"
     month_current = datetime.date(year=2019,month=8, day=1)
     month_days = Calendar().monthdatescalendar(2019, 8)
-    context = request.args.get('matter','')
-    get_date = request.args.get("day",'')
-    designated_date = datetime.datetime.strptime(get_date, "%Y-%m-%d").day
+    context_json = requests.get(url_info).text
+    context = json.loads(context_json)[0]["title"]
+    get_date = requests.get(url_info).text
+    designated_date = json.loads(get_date)[0]["day"]
     params = {
         'context':  context,
-        'day': designated_date
+        'day': datetime.datetime.strptime(designated_date,"%Y-%m-%d").day
     }
     week_name = ['月','火','水','木','金','土','日']
-    
+
     return render_template(
         "index.html",month_day = month_days, week_name = week_name, month_current = month_current.month, params = params
     )
@@ -43,15 +47,14 @@ def add_form(post_id):
 
 @app.route("/post", methods=["POST"])
 def create():
-    url = "http://localhost:3000/api/create"
+    url = "http://127.0.0.1:3000/api/create"
     params = {
         "title": request.form['title'],
         "context": request.form['context'],
         "day": request.form['day']
     }
-    json_request = requests.post(url, json=params)
-    print(json_request.status_code)
-    return redirect(url_for("index", matter=params['context'], day=params['day']))
+    requests.post(url, params=params)
+    return redirect(url_for("index"))
 
 
 

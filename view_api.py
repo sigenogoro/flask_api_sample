@@ -4,20 +4,30 @@ import calendar
 from calendar import Calendar
 import os
 import datetime
+import requests
 
 app = Flask(__name__)
 
-array_remind = {'title':[], 'content':[],'day':[]}
+#簡易DB
+array_remind = [
+    # {'title':"hoge", "content": "hoge", "day": "2019-08-28"},
+]
 
 
 @app.route("/api/index")
 def schedule_index():
-    month_current = Calendar().monthdatescalendar(2019, 8)
-    return jsonify(month_current)
+    return jsonify(array_remind)
 
 @app.route("/api/create", methods=["POST"])
 def create():
-    pass
+    if request.method == "POST":
+        data = {
+            "title": request.args.get("title",""),
+            "content": request.args.get("context",""),
+            "day": request.args.get("day","")
+        }
+        data_s = db_remind(data)
+        return '', 204
 
 
 @app.route("/api/detail", methods=["GET"])
@@ -25,19 +35,11 @@ def detail():
     return jsonify(request.form)
 
 
-
-
-def db_remind(title, content, day):
-    array_remind['title'].append(title)
-    array_remind['content'].append(content)
-    array_remind['day'].append(day)
+def db_remind(dict_params):
+    array_remind.append(dict_params)
     return array_remind
 
 
 
-
-
-
-
 if __name__ in "__main__":
-    app.run(debug=True, threaded=True, port=3000, host="localhost")
+    app.run(debug=True, threaded=True, port=3000)

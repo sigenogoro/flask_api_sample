@@ -21,16 +21,20 @@
                 {% for w in index %}
                     <td>
                         <a href="./{{w.day}}">{{w.day}}</a>
-                        {% if params['day'] == w.day %}
-                            <div class="box">{{params['context']}}</div>
+                        {% if params %}
+                            {% if params['day'] == w.day %}
+                                <div class="box">{{params['context']}}</div>
+                            {% endif %}
                         {% endif %}
-                        
                     </td>
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
-    
+    <form method="POST" action="/delete">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" class="btn btn-primary" value="全部消す">
+    </form>
   </body>
 </html>
   

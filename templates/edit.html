@@ -7,15 +7,15 @@
   </head>
   <body>
     <form method="POST" action="/post">
-      <input type="hidden" name="_method" value="POST">
+        <input type="hidden" value="put" name="_method">
         <div class="form-group">
           <label>title</label>
-          <input type="text" name="title" class="form-control">
+          <input type="text" name="title" class="form-control" value="{{params['title']}}">
           <small id="emailHelp" class="form-text text-muted">内容を記入してね！</small>
         </div>
         <div class="form-group">
           <label>context</label>
-          <input type="text" name="context" class="form-control">
+          <input type="text" name="context" class="form-control" value="{{params['context']}}">
         </div>
         <div class="form-group">
             {% if des_id <= 9 %}

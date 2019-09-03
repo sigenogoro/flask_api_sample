@@ -9,9 +9,7 @@ import requests
 app = Flask(__name__)
 
 #簡易DB
-array_remind = [
-    # {'title':"hoge", "content": "hoge", "day": "2019-08-28"},
-]
+array_remind = []
 
 
 @app.route("/api/index")
@@ -23,21 +21,42 @@ def create():
     if request.method == "POST":
         data = {
             "title": request.args.get("title",""),
-            "content": request.args.get("context",""),
+            "context": request.args.get("context",""),
             "day": request.args.get("day","")
         }
-        data_s = db_remind(data)
+        db_remind(data)
+        return '', 204
+
+@app.route("/api/edit", methods=["PUT"])
+def edit():
+    if request.method == "PUT":
+        data = {
+            "title": request.args.get("title",""),
+            "context": request.args.get("context",""),
+            "day": request.args.get("day","")
+        }
+        db_remind(data)
         return '', 204
 
 
-@app.route("/api/detail", methods=["GET"])
-def detail():
-    return jsonify(request.form)
+@app.route("/api/delete", methods=["DELETE"])
+def delete():
+    if request.method == "DELETE":
+        array_remind.clear()
+        return '', 204
 
 
 def db_remind(dict_params):
-    array_remind.append(dict_params)
-    return array_remind
+    if request.method == "POST":
+        array_remind.append(dict_params)
+        return array_remind
+    elif request.method == "PUT":
+        for params in array_remind:
+            if params['day'] == dict_params['day']:
+                params['title'] = dict_params['title']
+                params['context'] = dict_params['context']
+                return array_remind
+
 
 
 
